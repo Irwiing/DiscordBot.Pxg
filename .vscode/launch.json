@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Hot Reload Attach",
+            "type": "coreclr",
+            "request": "attach",
+            "preLaunchTask": "watch"
+        },
+        {
+            "name": "Build debug",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/DiscordBot.Pxg.Console/bin/Debug/net8.0/DiscordBot.Pxg.Console.dll",
+            "console": "integratedTerminal",
+        }
+    ]
+}
