@@ -1,4 +1,4 @@
-﻿using DiscordBot.Pxg.Services;
+﻿using DiscordBot.Pxg.Services.Discord;
 
 namespace DiscordBot.Pxg;
 

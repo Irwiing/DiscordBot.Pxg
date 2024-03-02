@@ -1,11 +1,14 @@
 using Discord;
 using Discord.WebSocket;
+using DiscordBot.Pxg.Repositories.Pokemon;
+using DiscordBot.Pxg.Services.Pokemon;
 
-namespace DiscordBot.Pxg.Services;
+namespace DiscordBot.Pxg.Services.Discord;
     
 public class DiscordServiceClient
 {
     private DiscordSocketClient _client;
+    private BoostServiceClient _boostServiceClient;
     
     private string _token;
 
@@ -17,6 +20,8 @@ public class DiscordServiceClient
         });
 
         _token = token;
+
+        _boostServiceClient = new BoostServiceClient(new BoostRepository());
     }
 
     public async Task Connect()
@@ -34,13 +39,13 @@ public class DiscordServiceClient
         if (message.Author.Id == _client.CurrentUser.Id)
             return;
 
-
-        if (message.Content == "!ping")
+        if (message.Content.Contains("!boost"))
         {
-            var cb = new ComponentBuilder()
-                .WithButton("Click me!", "unique-id", ButtonStyle.Primary);
+            var @params = message.Content.Split(' ');
 
-            await message.Channel.SendMessageAsync("pong!", components: cb.Build());
+            var response = _boostServiceClient.VerifyAmountToBoost(int.Parse(@params[1]), int.Parse(@params[2]), int.Parse(@params[3]));
+
+            await message.Channel.SendMessageAsync(response);
         }
     }
 
